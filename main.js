@@ -1,19 +1,40 @@
 /* jshint esversion: 6 */
-var app = new Vue({
-	el: "#app",
-	data: {
+Vue.component('detalle', {
+	template: `
+	<div class="detalle">
+	<p class="poke-nombre">{{ nombre }}</p>
+	<img :src="imagen">
+	<p>Peso: {{ peso }}</p>
+	<p>Altura: {{ altura }}</p>
+	<ul class="poke-thumbnails">
+		<li v-for="(parte, index) in imagenes"
+      			:key="index"
+			@mouseover="cambiarImagen(index)">
+		<img class="imagen-box" :src="parte">
+		</li>
+	</ul>
+	<ul class="poke-habilidades">
+		<li v-for="habilidad in habilidades">
+			{{ habilidad.ability.name}}
+		</li>
+	</ul>
+	</div>
+	`,
+	data() { 
+		return {
 			nombre : null,
 			peso: null,
 			altura: null,
 			imagenes: [],
 			imagenSeleccionada: 0,
 			habilidades: null,
+		};
 	},
 	mounted() {
 				fetch("https://pokeapi.co/api/v2/pokemon/ditto/")
 				.then(function(resp) { return resp.json();})
 				.then(function(da) {
-					console.log(this);
+					console.log(da);
         				this.app.nombre =  da.name;
         				this.app.peso =  da.weight;
         				this.app.altura =  da.height;
@@ -30,21 +51,21 @@ var app = new Vue({
 	computed: {
 		imagen() {
 			return this.imagenes[this.imagenSeleccionada];
-		}
-	}
+		},
+	},
 });
 
-//var busqueda = new Vue({
-//	el: '#busqueda',
-//	data: {
-//		url: 'https://pokeapi.co/api/v2/pokemon/ditto/',
-//		lista: null,
-//	},
-//	mounted() {
-//			fetch('150.json')
-//			.then(function(resp) { return resp.json(); })
-//			.then(function(da) {
-//				this.lista = da.results;
-//			});
-//	}
-//});
+var app = new Vue({
+	el: '#app',
+	data: {
+		url: 'https://pokeapi.co/api/v2/pokemon/ditto/',
+		lista: null,
+	},
+	mounted() {
+			fetch('150.json')
+			.then(function(resp) { return resp.json(); })
+			.then(function(da) {
+				this.app.lista = da.results;
+			});
+	}
+});
