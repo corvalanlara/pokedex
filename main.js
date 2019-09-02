@@ -12,7 +12,7 @@ Vue.component('detalle', {
 		url: function() { this.descargarData();},
 	},
 	template: `
-	<div class="detalle">
+	<div class="detalle" v-if="url">
 	<p class="poke-nombre">{{ nombre }}</p>
 	<img :src="imagen">
 	<p>Peso: {{ peso }}</p>
@@ -78,7 +78,7 @@ Vue.component('detalle', {
 var app = new Vue({
 	el: '#app',
 	data: {
-		url: 'https://pokeapi.co/api/v2/pokemon/pikachu/',
+		url: null,
 		lista: null,
 		indice: null,
 	},
