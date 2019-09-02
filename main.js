@@ -1,6 +1,16 @@
 /* jshint esversion: 6 */
 
 Vue.component('detalle', {
+	props: {
+		url: {
+			type: String,
+			required: true,
+			immediate: true,
+		},
+	},
+	watch: {
+		url: function() { this.descargarData();},
+	},
 	template: `
 	<div class="detalle">
 	<p class="poke-nombre">{{ nombre }}</p>
@@ -21,7 +31,7 @@ Vue.component('detalle', {
 	</ul>
 	</div>
 	`,
-	data: function() { 
+	data() { 
 		return {
 			nombre : null,
 			peso: null,
@@ -29,26 +39,33 @@ Vue.component('detalle', {
 			imagenes: [],
 			imagenSeleccionada: 0,
 			habilidades: null,
+			loading: false,
+			error: null,
 		};
 	},
-	created: function() {
-		console.log(this);
-				fetch("https://pokeapi.co/api/v2/pokemon/ditto/")
-				.then(function(resp) { return resp.json(); })
-				.then(function(da) {
-		console.log(this);
-		console.log(da);
-        				this.nombre =  da.name;
-        				this.peso =  da.weight;
-        				this.altura =  da.height;
-        				this.imagenes.push(da.sprites.front_default);
-        				this.imagenes.push(da.sprites.back_default);
-        				this.habilidades = da.abilities;
-				});
+	created() {
+		this.descargarData();
 	},
 	methods: {
 		cambiarImagen(index) {
 			this.imagenSeleccionada = index;
+		},
+		descargarData() {
+				this.loading = true;
+				fetch(this.url)
+				.then(function(resp) {
+					this.app.$children[0].loading = false;
+					return resp.json(); })
+				.then(function(da) {
+        				this.app.$children[0].nombre =  da.name;
+        				this.app.$children[0].peso =  da.weight;
+        				this.app.$children[0].altura =  da.height;
+					this.app.$children[0].imagenes = [];
+        				this.app.$children[0].imagenes.push(da.sprites.front_default);
+        				this.app.$children[0].imagenes.push(da.sprites.back_default);
+        				this.app.$children[0].habilidades = da.abilities;
+				});
+
 		},
 	},
 	computed: {
@@ -61,14 +78,25 @@ Vue.component('detalle', {
 var app = new Vue({
 	el: '#app',
 	data: {
-		url: 'https://pokeapi.co/api/v2/pokemon/ditto/',
+		url: 'https://pokeapi.co/api/v2/pokemon/pikachu/',
 		lista: null,
+		indice: null,
 	},
-	created: function() {
+	created() {
 			fetch('150.json')
 			.then(function(resp) { return resp.json(); })
 			.then(function(da) {
 				this.app.lista = da.results;
 			});
-	}
+	},
+	methods: {
+		obtenerURL() {
+			this.url = "";
+		},
+		onChange(value) {
+			if (value) {
+				this.url = this.lista[value].url;
+			}
+		},
+	},
 });
