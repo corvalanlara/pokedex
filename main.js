@@ -1,4 +1,5 @@
 /* jshint esversion: 6 */
+
 Vue.component('detalle', {
 	template: `
 	<div class="detalle">
@@ -20,7 +21,7 @@ Vue.component('detalle', {
 	</ul>
 	</div>
 	`,
-	data() { 
+	data: function() { 
 		return {
 			nombre : null,
 			peso: null,
@@ -30,17 +31,19 @@ Vue.component('detalle', {
 			habilidades: null,
 		};
 	},
-	mounted() {
+	created: function() {
+		console.log(this);
 				fetch("https://pokeapi.co/api/v2/pokemon/ditto/")
-				.then(function(resp) { return resp.json();})
+				.then(function(resp) { return resp.json(); })
 				.then(function(da) {
-					console.log(da);
-        				this.app.nombre =  da.name;
-        				this.app.peso =  da.weight;
-        				this.app.altura =  da.height;
-        				this.app.imagenes.push(da.sprites.front_default);
-        				this.app.imagenes.push(da.sprites.back_default);
-        				this.app.habilidades = da.abilities;
+		console.log(this);
+		console.log(da);
+        				this.nombre =  da.name;
+        				this.peso =  da.weight;
+        				this.altura =  da.height;
+        				this.imagenes.push(da.sprites.front_default);
+        				this.imagenes.push(da.sprites.back_default);
+        				this.habilidades = da.abilities;
 				});
 	},
 	methods: {
@@ -61,7 +64,7 @@ var app = new Vue({
 		url: 'https://pokeapi.co/api/v2/pokemon/ditto/',
 		lista: null,
 	},
-	mounted() {
+	created: function() {
 			fetch('150.json')
 			.then(function(resp) { return resp.json(); })
 			.then(function(da) {
