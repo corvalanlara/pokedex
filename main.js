@@ -14,7 +14,7 @@ Vue.component('detalle', {
 	template: `
 	<div class="detalle" v-if="url">
 	<p class="poke-nombre">{{ nombre }}</p>
-	<img :src="imagen">
+	<img :src="imagen" v-if="imagenes.length">
 	<p>Peso: {{ peso }}</p>
 	<p>Altura: {{ altura }}</p>
 	<ul class="poke-thumbnails">
@@ -61,8 +61,12 @@ Vue.component('detalle', {
         				this.app.$children[0].peso =  da.weight;
         				this.app.$children[0].altura =  da.height;
 					this.app.$children[0].imagenes = [];
+					if (da.sprites.front_default) {
         				this.app.$children[0].imagenes.push(da.sprites.front_default);
+					}
+					if (da.sprites.back_default) {
         				this.app.$children[0].imagenes.push(da.sprites.back_default);
+					}
         				this.app.$children[0].habilidades = da.abilities;
 				});
 
