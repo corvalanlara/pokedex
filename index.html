@@ -10,7 +10,7 @@
 <body>
 
 	<div class="container" id="app">
-	<div class="select">
+	<div class="select is-rounded">
 		<select id="indice" v-model.number="indice" @change="onChange(indice)">
 		<option v-for="(pokemon, index) in lista" :value="index">{{ pokemon.name }}</option>
 		</select>
