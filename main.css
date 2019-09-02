@@ -1,0 +1,14 @@
+.imagen-box {
+        width: 40px;
+        height: 40px;
+        margin-top: 5px;
+	border-style: solid;
+}
+
+.poke-thumbnails li {
+	display: inline;
+}
+
+.poke-nombre, .poke-habilidades, .select, option {
+	text-transform: capitalize;
+}

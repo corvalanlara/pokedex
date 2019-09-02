@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Pokédex Vulma</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+	<link rel="stylesheet" href="main.css">
+</head>
+<body>
+<!--
+	<div class="container" id="app">
+	<div class="select">
+		<select>
+		<option v-for="(pokemon, index) in lista" :value="index">{{ pokemon.name }}</option>
+		</select>
+	</div>
+	</div>
+-->
+
+	<div class="detalle" id="app">
+	<p class="poke-nombre">{{ nombre }}</p>
+	<img :src="imagen">
+	<p>Peso: {{ peso }}</p>
+	<p>Altura: {{ altura }}</p>
+	<ul class="poke-thumbnails">
+		<li v-for="(parte, index) in imagenes"
+      			:key="index"
+			@mouseover="cambiarImagen(index)">
+		<img class="imagen-box" :src="parte">
+		</li>
+	</ul>
+	<ul class="poke-habilidades">
+		<li v-for="habilidad in habilidades">
+			{{ habilidad.ability.name}}
+		</li>
+	</ul>
+
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="main.js"></script>
+</body>
+</html>
