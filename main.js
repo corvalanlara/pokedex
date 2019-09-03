@@ -14,17 +14,20 @@ Vue.component('detalle', {
 	template: `
 	<div class="detalle" v-if="url">
 	<p class="poke-nombre">{{ nombre }}</p>
-	<img :src="imagen" v-if="imagenes.length">
-	<p>Weight: {{ peso }} kg.</p>
-	<p>Height: {{ altura }} cm.</p>
+		<div class="poke-visual">
+			<img class="poke-imagen" :src="imagen" v-if="imagenes.length">
+			<ul class="poke-thumbnails">
+				<li v-for="(parte, index) in imagenes"
+		      			:key="index"
+					@mouseover="cambiarImagen(index)">
+				<img class="imagen-box" :src="parte">
+				</li>
+			</ul>
+		</div>
+	<p class="poke-peso">Weight: {{ peso }} kg.</p>
+	<p class="poke-altura">Height: {{ altura }} cm.</p>
 	<p class="poke-tipo" v-for="tipo in tipos">{{ tipo }}</p>
-	<ul class="poke-thumbnails">
-		<li v-for="(parte, index) in imagenes"
-      			:key="index"
-			@mouseover="cambiarImagen(index)">
-		<img class="imagen-box" :src="parte">
-		</li>
-	</ul>
+
 	<ul class="poke-habilidades">
 		<li v-for="habilidad in habilidades">
 			{{ habilidad.ability.name}}
@@ -108,7 +111,7 @@ var app = new Vue({
 			.then(function(da) {
 				este.lista = da.results;
 				for (let i of da.results) {
-					este.data.push(i['name']);
+					este.data.push(i.name);
 				}
 			});
 	},

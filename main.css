@@ -1,11 +1,37 @@
+#app {
+	text-align: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+}
+
+.autocomplete {
+	padding: 5%;
+}
+
+.box {
+	background-color: hsl(348, 100%, 61%);
+}
+
+.detalle {
+	color: white;
+}
+
 .imagen-box {
         width: 40px;
         height: 40px;
         margin-top: 5px;
-	border-style: solid;
+	border: thin solid white;
+	border-radius: 25% 10%;
 }
 
-.poke-thumbnails li {
+.poke-nombre {
+	font-size: x-large;
+}
+
+.poke-thumbnails li, .poke-tipo, .poke-visual {
 	display: inline;
 }
 

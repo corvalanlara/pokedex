@@ -9,8 +9,8 @@
 	<link rel="stylesheet" href="main.css">
 </head>
 <body>
-
-	<div class="container" id="app">
+<div class="content">
+	<div class="box" id="app">
 	    <b-autocomplete
                 rounded
                 v-model="name"
@@ -22,9 +22,9 @@
             </b-autocomplete>
 	<detalle :url="url" v-if="url"></detalle>
 	</div>
-	
+
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-	<script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
+	<script src="https://unpkg.com/buefy/dist/components/autocomplete"></script>
 	<script src="main.js"></script>
 </body>
 </html>
