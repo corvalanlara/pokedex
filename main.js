@@ -15,8 +15,9 @@ Vue.component('detalle', {
 	<div class="detalle" v-if="url">
 	<p class="poke-nombre">{{ nombre }}</p>
 	<img :src="imagen" v-if="imagenes.length">
-	<p>Peso: {{ peso }}</p>
-	<p>Altura: {{ altura }}</p>
+	<p>Weight: {{ peso }} kg.</p>
+	<p>Height: {{ altura }} cm.</p>
+	<p v-for="tipo in tipos">{{ tipo }}</p>
 	<ul class="poke-thumbnails">
 		<li v-for="(parte, index) in imagenes"
       			:key="index"
@@ -33,6 +34,7 @@ Vue.component('detalle', {
 	`,
 	data() { 
 		return {
+			id: null,
 			nombre : null,
 			peso: null,
 			altura: null,
@@ -41,6 +43,7 @@ Vue.component('detalle', {
 			habilidades: null,
 			loading: false,
 			error: null,
+			tipos: [],
 		};
 	},
 	created() {
@@ -57,9 +60,10 @@ Vue.component('detalle', {
 					this.app.$children[0].loading = false;
 					return resp.json(); })
 				.then(function(da) {
+        				this.app.$children[0].id =  da.id;
         				this.app.$children[0].nombre =  da.name;
-        				this.app.$children[0].peso =  da.weight;
-        				this.app.$children[0].altura =  da.height;
+        				this.app.$children[0].peso =  da.weight * 0.1; //valor original en hectogramos
+        				this.app.$children[0].altura =  da.height * 10; //valor original en decimetros
 					this.app.$children[0].imagenes = [];
 					if (da.sprites.front_default) {
         				this.app.$children[0].imagenes.push(da.sprites.front_default);
@@ -68,6 +72,10 @@ Vue.component('detalle', {
         				this.app.$children[0].imagenes.push(da.sprites.back_default);
 					}
         				this.app.$children[0].habilidades = da.abilities;
+        				this.app.$children[0].tipos = [];
+					for(var x of da.types) {
+        					this.app.$children[0].tipos.push(x.type.name);
+					}
 				});
 
 		},
@@ -91,7 +99,7 @@ var app = new Vue({
 			.then(function(resp) { return resp.json(); })
 			.then(function(da) {
 				this.app.lista = da;
-				this.app.lista.unshift({'name': 'Selecciona', 'url': ''});
+				this.app.lista.unshift({'name': 'Choose one', 'url': ''});
 			});
 	},
 	methods: {
