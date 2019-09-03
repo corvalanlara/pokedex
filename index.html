@@ -5,26 +5,26 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Pokédex Vulma</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+	<link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
 	<link rel="stylesheet" href="main.css">
 </head>
 <body>
 
 	<div class="container" id="app">
-	<div class="select is-rounded">
-		<select id="indice" 
-			v-model.number="indice" 
-			@change="onChange(indice)">
-		<option 
-		v-for="(pokemon, index) in lista" 
-		:value="index"
-		:disabled="index === 0">{{ pokemon.name }}</option>
-		
-		</select>
-	</div>
+	    <b-autocomplete
+                rounded
+                v-model="name"
+                :data="filteredDataArray"
+                placeholder="e.g. Charizard"
+                icon="magnify"
+		@select="option => selected = option">
+                <template slot="empty">Sin resultados</template>
+            </b-autocomplete>
 	<detalle :url="url" v-if="url"></detalle>
 	</div>
 	
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
 	<script src="main.js"></script>
 </body>
 </html>

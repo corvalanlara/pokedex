@@ -55,26 +55,27 @@ Vue.component('detalle', {
 		},
 		descargarData() {
 				this.loading = true;
+				let este = this;
 				fetch(this.url)
 				.then(function(resp) {
-					this.app.$children[0].loading = false;
+					este.loading = false;
 					return resp.json(); })
 				.then(function(da) {
-        				this.app.$children[0].id =  da.id;
-        				this.app.$children[0].nombre =  da.name;
-        				this.app.$children[0].peso =  da.weight * 0.1; //valor original en hectogramos
-        				this.app.$children[0].altura =  da.height * 10; //valor original en decimetros
-					this.app.$children[0].imagenes = [];
+        				este.id =  da.id;
+        				este.nombre =  da.name;
+        				este.peso =  da.weight * 0.1; //valor original en hectogramos
+        				este.altura =  da.height * 10; //valor original en decimetros
+					este.imagenes = [];
 					if (da.sprites.front_default) {
-        				this.app.$children[0].imagenes.push(da.sprites.front_default);
+        				este.imagenes.push(da.sprites.front_default);
 					}
 					if (da.sprites.back_default) {
-        				this.app.$children[0].imagenes.push(da.sprites.back_default);
+        				este.imagenes.push(da.sprites.back_default);
 					}
-        				this.app.$children[0].habilidades = da.abilities;
-        				this.app.$children[0].tipos = [];
+        				este.habilidades = da.abilities;
+        				este.tipos = [];
 					for(var x of da.types) {
-        					this.app.$children[0].tipos.push(x.type.name);
+        					este.tipos.push(x.type.name);
 					}
 				});
 
@@ -89,10 +90,16 @@ Vue.component('detalle', {
 
 var app = new Vue({
 	el: '#app',
+	watch: {
+		selected: function(value) { this.onChange(value);},
+	},
 	data: {
 		url: null,
+		data: ["Choose One", "Abra", "Aerodactyl", "Alakazam", "Arbok", "Arcanine", "Articuno", "Beedrill", "Bellsprout", "Blastoise", "Bulbasaur", "Butterfree", "Caterpie", "Chansey", "Charizard", "Charmander", "Charmeleon", "Clefable", "Clefairy", "Cloyster", "Cubone", "Dewgong", "Diglett", "Ditto", "Dodrio", "Doduo", "Dragonair", "Dragonite", "Dratini", "Drowzee", "Dugtrio", "Eevee", "Ekans", "Electabuzz", "Electrode", "Exeggcute", "Exeggutor", "Farfetchd", "Fearow", "Flareon", "Gastly", "Gengar", "Geodude", "Gloom", "Golbat", "Goldeen", "Golduck", "Golem", "Graveler", "Grimer", "Growlithe", "Gyarados", "Haunter", "Hitmonchan", "Hitmonlee", "Horsea", "Hypno", "Ivysaur", "Jigglypuff", "Jolteon", "Jynx", "Kabuto", "Kabutops", "Kadabra", "Kakuna", "Kangaskhan", "Kingler", "Koffing", "Krabby", "Lapras", "Lickitung", "Machamp", "Machoke", "Machop", "Magikarp", "Magmar", "Magnemite", "Magneton", "Mankey", "Marowak", "Meowth", "Metapod", "Mewtwo", "Moltres", "Mr-Mime", "Muk", "Nidoking", "Nidoqueen", "Nidoran-F", "Nidoran-M", "Nidorina", "Nidorino", "Ninetales", "Oddish", "Omanyte", "Omastar", "Onix", "Paras", "Parasect", "Persian", "Pidgeot", "Pidgeotto", "Pidgey", "Pikachu", "Pinsir", "Poliwag", "Poliwhirl", "Poliwrath", "Ponyta", "Porygon", "Primeape", "Psyduck", "Raichu", "Rapidash", "Raticate", "Rattata", "Rhydon", "Rhyhorn", "Sandshrew", "Sandslash", "Scyther", "Seadra", "Seaking", "Seel", "Shellder", "Slowbro", "Slowpoke", "Snorlax", "Spearow", "Squirtle", "Starmie", "Staryu", "Tangela", "Tauros", "Tentacool", "Tentacruel", "Vaporeon", "Venomoth", "Venonat", "Venusaur", "Victreebel", "Vileplume", "Voltorb", "Vulpix", "Wartortle", "Weedle", "Weepinbell", "Weezing", "Wigglytuff", "Zapdos", "Zubat"],
 		lista: null,
 		indice: 0,
+		name: '',
+		selected: null,
 	},
 	created() {
 			fetch('150lite.json')
@@ -104,9 +111,20 @@ var app = new Vue({
 	},
 	methods: {
 		onChange(value) {
-			if (value && value != 0) {
-				this.url = this.lista[value].url;
+			if (value) {
+				let indice = this.data.indexOf(value);
+				this.url = this.lista[indice].url;
 			}
 		},
 	},
+	computed: {
+            filteredDataArray() {
+                return this.data.filter((option) => {
+                    return option
+                        .toString()
+                        .toLowerCase()
+                        .indexOf(this.name.toLowerCase()) >= 0;
+                });
+            }
+        },
 });
