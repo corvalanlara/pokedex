@@ -17,7 +17,7 @@ Vue.component('detalle', {
 	<img :src="imagen" v-if="imagenes.length">
 	<p>Weight: {{ peso }} kg.</p>
 	<p>Height: {{ altura }} cm.</p>
-	<p v-for="tipo in tipos">{{ tipo }}</p>
+	<p class="poke-tipo" v-for="tipo in tipos">{{ tipo }}</p>
 	<ul class="poke-thumbnails">
 		<li v-for="(parte, index) in imagenes"
       			:key="index"
@@ -95,18 +95,21 @@ var app = new Vue({
 	},
 	data: {
 		url: null,
-		data: ["Choose One", "Abra", "Aerodactyl", "Alakazam", "Arbok", "Arcanine", "Articuno", "Beedrill", "Bellsprout", "Blastoise", "Bulbasaur", "Butterfree", "Caterpie", "Chansey", "Charizard", "Charmander", "Charmeleon", "Clefable", "Clefairy", "Cloyster", "Cubone", "Dewgong", "Diglett", "Ditto", "Dodrio", "Doduo", "Dragonair", "Dragonite", "Dratini", "Drowzee", "Dugtrio", "Eevee", "Ekans", "Electabuzz", "Electrode", "Exeggcute", "Exeggutor", "Farfetchd", "Fearow", "Flareon", "Gastly", "Gengar", "Geodude", "Gloom", "Golbat", "Goldeen", "Golduck", "Golem", "Graveler", "Grimer", "Growlithe", "Gyarados", "Haunter", "Hitmonchan", "Hitmonlee", "Horsea", "Hypno", "Ivysaur", "Jigglypuff", "Jolteon", "Jynx", "Kabuto", "Kabutops", "Kadabra", "Kakuna", "Kangaskhan", "Kingler", "Koffing", "Krabby", "Lapras", "Lickitung", "Machamp", "Machoke", "Machop", "Magikarp", "Magmar", "Magnemite", "Magneton", "Mankey", "Marowak", "Meowth", "Metapod", "Mewtwo", "Moltres", "Mr-Mime", "Muk", "Nidoking", "Nidoqueen", "Nidoran-F", "Nidoran-M", "Nidorina", "Nidorino", "Ninetales", "Oddish", "Omanyte", "Omastar", "Onix", "Paras", "Parasect", "Persian", "Pidgeot", "Pidgeotto", "Pidgey", "Pikachu", "Pinsir", "Poliwag", "Poliwhirl", "Poliwrath", "Ponyta", "Porygon", "Primeape", "Psyduck", "Raichu", "Rapidash", "Raticate", "Rattata", "Rhydon", "Rhyhorn", "Sandshrew", "Sandslash", "Scyther", "Seadra", "Seaking", "Seel", "Shellder", "Slowbro", "Slowpoke", "Snorlax", "Spearow", "Squirtle", "Starmie", "Staryu", "Tangela", "Tauros", "Tentacool", "Tentacruel", "Vaporeon", "Venomoth", "Venonat", "Venusaur", "Victreebel", "Vileplume", "Voltorb", "Vulpix", "Wartortle", "Weedle", "Weepinbell", "Weezing", "Wigglytuff", "Zapdos", "Zubat"],
+		data: [],
 		lista: null,
 		indice: 0,
 		name: '',
 		selected: null,
 	},
 	created() {
-			fetch('150lite.json')
+			let este = this;
+			fetch('150.json')
 			.then(function(resp) { return resp.json(); })
 			.then(function(da) {
-				this.app.lista = da;
-				this.app.lista.unshift({'name': 'Choose one', 'url': ''});
+				este.lista = da.results;
+				for (let i of da.results) {
+					este.data.push(i['name']);
+				}
 			});
 	},
 	methods: {

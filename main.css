@@ -9,6 +9,6 @@
 	display: inline;
 }
 
-.poke-nombre, .poke-habilidades, .select, option {
+.poke-nombre, .poke-tipo, .poke-habilidades, .select, option {
 	text-transform: capitalize;
 }
