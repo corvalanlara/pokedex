@@ -1,4 +1,7 @@
 /* jshint esversion: 6 */
+String.prototype.capitalizar = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+};
 
 Vue.component('detalle', {
 	props: {
@@ -14,25 +17,41 @@ Vue.component('detalle', {
 	template: `
 	<div class="detalle" v-if="url">
 	<p class="poke-nombre">{{ nombre }}</p>
-		<div class="poke-visual">
-			<img class="poke-imagen" :src="imagen" v-if="imagenes.length">
-			<ul class="poke-thumbnails">
-				<li v-for="(parte, index) in imagenes"
-		      			:key="index"
-					@mouseover="cambiarImagen(index)">
-				<img class="imagen-box" :src="parte">
-				</li>
-			</ul>
+		<div class="detalle tile is-ancestor">
+			<div class="tile is-4 is-vertical is-parent">
+				<div class="poke-visual tile is-child">
+					<img class="poke-imagen" :src="imagen" v-if="imagenes.length">
+				</div>
+				<div class="poke-visual tile is-child">
+					<div class="poke-thumbnails">
+						<span v-for="(parte, index) in imagenes"
+				      			:key="index"
+							@mouseover="cambiarImagen(index)">
+							<img class="imagen-box" :src="parte">
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="poke-datos tile is-vertical is-parent">
+				<div class="tile is-child">
+					<p class="poke-peso"><strong>Weight:</strong><br>{{ peso }} kg.</p>
+					<p class="poke-altura"><strong>Height:</strong><br>{{ altura }} cm.</p>
+				</div>
+			</div>
+			<div class="tile is-vertical is-parent">
+				<div class="tile is-child">
+					<span><strong>Type:</strong><br></span>
+					<span class="poke-tipo" v-for="tipo in tipos">
+						{{ tipo }}<br></span>
+						<br>
+					<span><strong>Abilities:</strong><br></span>
+					<span 
+					class="poke-habilidad" 
+					v-for="habilidad in habilidades">
+						{{ habilidad.ability.name}}<br></span>
+				</div>
+			</div>
 		</div>
-	<p class="poke-peso">Weight: {{ peso }} kg.</p>
-	<p class="poke-altura">Height: {{ altura }} cm.</p>
-	<p class="poke-tipo" v-for="tipo in tipos">{{ tipo }}</p>
-
-	<ul class="poke-habilidades">
-		<li v-for="habilidad in habilidades">
-			{{ habilidad.ability.name}}
-		</li>
-	</ul>
 	</div>
 	`,
 	data() { 
@@ -106,12 +125,12 @@ var app = new Vue({
 	},
 	created() {
 			let este = this;
-			fetch('150.json')
+			fetch('todos.json')
 			.then(function(resp) { return resp.json(); })
 			.then(function(da) {
 				este.lista = da.results;
 				for (let i of da.results) {
-					este.data.push(i.name);
+					este.data.push(i.name.capitalizar());
 				}
 			});
 	},
