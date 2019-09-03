@@ -87,10 +87,10 @@ var app = new Vue({
 		indice: 0,
 	},
 	created() {
-			fetch('150.json')
+			fetch('150lite.json')
 			.then(function(resp) { return resp.json(); })
 			.then(function(da) {
-				this.app.lista = da.results;
+				this.app.lista = da;
 				this.app.lista.unshift({'name': 'Selecciona', 'url': ''});
 			});
 	},
