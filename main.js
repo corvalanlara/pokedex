@@ -84,21 +84,19 @@ var app = new Vue({
 	data: {
 		url: null,
 		lista: null,
-		indice: null,
+		indice: 0,
 	},
 	created() {
 			fetch('150.json')
 			.then(function(resp) { return resp.json(); })
 			.then(function(da) {
 				this.app.lista = da.results;
+				this.app.lista.unshift({'name': 'Selecciona', 'url': ''});
 			});
 	},
 	methods: {
-		obtenerURL() {
-			this.url = "";
-		},
 		onChange(value) {
-			if (value) {
+			if (value && value != 0) {
 				this.url = this.lista[value].url;
 			}
 		},
