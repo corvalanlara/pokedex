@@ -23,7 +23,7 @@ Vue.component('detalle', {
 					<img class="poke-imagen" :src="imagen" v-if="imagenes.length">
 				</div>
 				<div class="poke-visual tile is-child">
-					<div class="poke-thumbnails">
+					<div class="poke-thumbnails" v-if="!noimage">
 						<span v-for="(parte, index) in imagenes"
 				      			:key="index"
 							@mouseover="cambiarImagen(index)">
@@ -66,6 +66,7 @@ Vue.component('detalle', {
 			loading: false,
 			error: null,
 			tipos: [],
+			noimage: true,
 		};
 	},
 	created() {
@@ -89,10 +90,13 @@ Vue.component('detalle', {
         				este.altura =  da.height * 10; //valor original en decimetros
 					este.imagenes = [];
 					if (da.sprites.front_default) {
-        				este.imagenes.push(da.sprites.front_default);
+						este.noimage = false;
+        					este.imagenes.push(da.sprites.front_default);
+					} else {
+						este.imagenes.push('noimage.png');
 					}
 					if (da.sprites.back_default) {
-        				este.imagenes.push(da.sprites.back_default);
+        					este.imagenes.push(da.sprites.back_default);
 					}
         				este.habilidades = da.abilities;
         				este.tipos = [];
