@@ -88,7 +88,7 @@ Vue.component('detalle', {
         				este.id =  da.id;
         				este.nombre =  da.name;
         				este.peso = (da.weight * 0.1).toFixed(1); //valor original en hectogramos
-        				este.altura = (da.height * 10)toFixed(1); //valor original en decimetros
+        				este.altura = (da.height * 10).toFixed(1); //valor original en decimetros
 					este.imagenes = [];
 					if (da.sprites.front_default) {
 						este.noimage = false;
