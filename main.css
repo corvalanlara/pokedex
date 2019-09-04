@@ -6,6 +6,9 @@ strong {
 #app {
 	text-align: center;
 	background-color: hsl(348, 100%, 61%);
+	margin-top: 20%;
+	margin-left: 5%;
+	margin-right: 5%;
 }
 
 .autocomplete {
