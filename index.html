@@ -9,7 +9,9 @@
 	<link rel="stylesheet" href="main.css">
 </head>
 <body>
-<div class="content">
+<div class="container">
+	<div class="columns is-mobile is-centered">
+	<div class="column is-narrow is-vcentered">
 	<div class="box" id="app">
 	    <b-autocomplete
                 rounded
@@ -21,6 +23,8 @@
                 <template slot="empty">Sin resultados</template>
             </b-autocomplete>
 	<detalle :url="url" v-if="url"></detalle>
+	</div>
+	</div>
 	</div>
 
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
