@@ -77,6 +77,7 @@ Vue.component('detalle', {
 			this.imagenSeleccionada = index;
 		},
 		descargarData() {
+				this.noimage = true;
 				this.loading = true;
 				let este = this;
 				fetch(this.url)
