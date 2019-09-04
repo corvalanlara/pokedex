@@ -6,7 +6,6 @@ strong {
 #app {
 	text-align: center;
 	background-color: hsl(348, 100%, 61%);
-	margin-top: 15%;
 }
 
 .autocomplete {
@@ -35,13 +34,5 @@ strong {
 
 .poke-nombre, .poke-tipo, .poke-habilidad, .select, option {
 	text-transform: capitalize;
-}
-
-@media
-only screen and (max-width: 760px),
-(min-device-width: 768px) and (max-device-width: 1024px) {
-        #app {
-                margin-top: 10%;
-        }
 }
 
